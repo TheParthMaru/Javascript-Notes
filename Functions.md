@@ -112,3 +112,148 @@ const add = function (a, b) {
 - We get `ReferenceError: Cannot access 'functionName' before initialization` error when we call the function expression before declaring it.
 
 ## Anonymous function
+
+- Function without a name is called as an Anonymous function.
+
+```js
+// Example 1
+btn.addEventListener(
+  "onClick",
+  (function () {
+    return a + b;
+  })()
+);
+
+// Example 2
+const greetUser = function (name) {
+  return "Hi " + name;
+};
+```
+
+## Arrow functions
+
+```js
+// Function expression
+const add = function (a, b) {
+  return a + b;
+};
+
+// Arrow function
+const add = (a, b) => a + b;
+
+// General syntax
+(arg1, arg2) => {...}
+
+// No args/params
+() => {...} // Empty pair of () is required
+
+// Exactly 1 param/arg
+arg => {...} // () can be omitted
+
+// Exactly 1 expression in function body
+(a, b) => a + b; // {} can be ommitted, result is returned by default, no need to use return keyword. There is always a return behind the scene.
+
+// More than 1 expression in function body
+(a, b) => {
+  a += 2;
+  return a + b;
+} // {} and return is required
+```
+
+## Default arguments in functions
+
+```js
+const add = (a, b) => a + b;
+
+console.log(add(5)); // NaN
+```
+
+- This happens because we are passing only one argument `5` which gets stored in parameter `a`.
+- Parameter `b` is `undefined` and when it evaluates `a + b`, it is actually evaluating `5 + undefined` = `NaN`.
+
+```js
+// Setting default value of b as 0
+const add = (a, b = 0) => a + b;
+
+console.log(add(5)); // 5
+console.log(add(5, 6)); // 11
+```
+
+- Now when we pass only 1 arg, `b` will be initialized to its default value.
+- When we pass two args, `b` will initialized to the second arg.
+- Default params can be placed at any positions in the params list in the function.
+- This is allowed in Javascript and not in many other languages.
+- But order will matter when passing the args.
+
+```js
+const add = (a = 0, b) => a + b;
+
+console.log(add(5)); // NaN
+```
+
+- Here, `b` will still be initialized as `undefined` because we are only passing 1 arg and that is getting stored in `a`.
+- So it is a good practice to have default params at the end of the params list.
+
+## Rest parameter or Rest operator
+
+```js
+const add = (...numbers) => {
+  let sum = 0;
+  for (const num of numbers) {
+    sum += num;
+  }
+  return sum;
+};
+
+console.log(add(1)); // 1
+console.log(add(1, 2, 3, 4, 5)); // 15
+console.log(add()); // 0
+console.log(add(1, 2, 3, 4, 5, 6, 7, 8)); // 36
+console.log(add(1, 3)); // 4
+console.log(add(1, 7, 5, 3)); //16
+```
+
+- In the above code, `...` is the rest operator.
+- All the arguments received are stored in `numbers` which is an array.
+- This way we can pass as many args we want.
+- Rest param needs to be the last param.
+- We can only have 1 rest param.
+
+### `arguments` keyword
+
+- Before the Rest operator, we used `arguments` keyword to perform the similar functionality of Rest operator.
+
+```js
+const add = function () {
+  let sum = 0;
+  for (let num of arguments) {
+    sum += num;
+  }
+  return sum;
+};
+
+console.log(add(1)); // 1
+console.log(add(1, 2, 3, 4, 5)); // 15
+console.log(add()); // 0
+```
+
+- Even though the `function()` does not have any parameters, `arguments` keyword stores whatever arguments where passed to the function in an array like form.
+- This functionality only works with function declaration.
+- Using Rest operator is recommended.
+
+## Nested functions
+
+```js
+const add = (...numbers) => {
+  let validateNumber = (number) => {
+    return isNaN(number) ? 0 : number;
+  };
+
+  let sum = 0;
+  for (let num of numbers) {
+    sum += validateNumber(num);
+  }
+
+  return sum;
+};
+```
