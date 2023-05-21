@@ -38,6 +38,16 @@
 - `===` -> Value and type equal to
 - `!===` -> Value and type not equal to
 
+# Logical operators
+
+- `&&` -> AND
+- `||` -> OR
+- `!` -> NOT
+
+# Conditional opeartor/ Ternary operator
+
+- condition ? true : false
+
 # Operator precedence
 
 - [Refer to this table in mdn docs](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Operator_precedence#table)
